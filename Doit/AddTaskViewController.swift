@@ -14,21 +14,17 @@ class AddTaskViewController: UIViewController {
     
     @IBOutlet weak var taskNameTextField: UITextField!
     
-    var previousVC = ViewController()
-    
     @IBAction func addButton(_ sender: Any) {
         //Create a task
         
-        let task = Task()
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        
+        let task = Task(context: context)
         task.name = taskNameTextField.text!
         task.important = importantSwitch.isOn
         
-        //Add new task to array
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
-        previousVC.tasks.append(task)
-        
-        print(previousVC.tasks.count)
-        previousVC.tableView.reloadData()
         navigationController!.popViewController(animated: true)
 
     }
@@ -38,7 +34,6 @@ class AddTaskViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        print(previousVC.tasks.count)
     }
 
     override func didReceiveMemoryWarning() {
