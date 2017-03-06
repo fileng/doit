@@ -14,21 +14,27 @@ class deleteTaskViewController: UIViewController {
 
     @IBOutlet weak var taskLabel: UILabel!
     
-    
     @IBAction func deleteTaskButton(_ sender: Any) {
+        
+        // Get Core Data
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
+        // Delete task in Core Data
         context.delete(task!)
+        
+        // Save deletion
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
+        // Get back to table view
         navigationController!.popViewController(animated: true)
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        // Show selected task
         if task!.important {
             taskLabel.text = "❗️\(task!.name!)"
         } else {

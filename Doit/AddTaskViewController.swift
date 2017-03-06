@@ -15,16 +15,19 @@ class AddTaskViewController: UIViewController {
     @IBOutlet weak var taskNameTextField: UITextField!
     
     @IBAction func addButton(_ sender: Any) {
-        //Create a task
         
+        // Get Core Data
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
+        // Add info to new task
         let task = Task(context: context)
         task.name = taskNameTextField.text!
         task.important = importantSwitch.isOn
         
+        // Save task to Core Data
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
+        // Get back to table view
         navigationController!.popViewController(animated: true)
 
     }
